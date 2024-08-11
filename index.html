@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Stopwatch</title>
+    <style>
+        /* General Styles */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Stopwatch Container */
+        .stopwatch-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Time Display */
+        .time-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        /* Start Button */
+        .start {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .start:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        /* Stop Button */
+        .stop {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .stop:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Reset Button */
+        .reset {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .reset:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Button Active States */
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="stopwatch-container">
+    <div id="display" class="time-display">00:00:00</div>
+    <div class="buttons">
+        <button id="start" class="btn start" onclick="startTimer()">Start</button>
+        <button id="stop" class="btn stop" onclick="stopTimer()">Stop</button>
+        <button id="reset" class="btn reset" onclick="resetTimer()">Reset</button>
+    </div>
+</div>
+
+<script>
+    let timer;
+    let elapsedTime = 0;
+    let running = false;
+
+    function updateDisplay() {
+        let hours = Math.floor(elapsedTime / 3600);
+        let minutes = Math.floor((elapsedTime % 3600) / 60);
+        let seconds = elapsedTime % 60;
+
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        document.getElementById('display').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    function startTimer() {
+        if (!running) {
+            running = true;
+            timer = setInterval(() => {
+                elapsedTime++;
+                updateDisplay();
+            }, 1000);
+        }
+    }
+
+    function stopTimer() {
+        running = false;
+        clearInterval(timer);
+    }
+
+    function resetTimer() {
+        running = false;
+        clearInterval(timer);
+        elapsedTime = 0;
+        updateDisplay();
+    }
+</script>
+
+</body>
+</html>
